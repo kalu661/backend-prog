@@ -1,9 +1,7 @@
-const Examen = require("../models/examen.model.js");
-
-const ctrExam = {};
+import Examen from "../models/examen.model";
 
 //$ POST => Control para los examenes
-ctrExam.postExamen = async (req, res) => {
+export const postExamen = async (req, res) => {
 	const { nombre, nota, fecha, materia, estudiante } = req.body;
 	try {
 		const examen = new Examen({
@@ -27,7 +25,7 @@ ctrExam.postExamen = async (req, res) => {
 };
 
 //° GET => Control para obtener los examenes
-ctrExam.getExamenes = async (req, res) => {
+export const getExamenes = async (req, res) => {
 	const examenes = await Examen.find();
 	res.json({
 		examenes,
@@ -35,7 +33,7 @@ ctrExam.getExamenes = async (req, res) => {
 };
 
 //° PUT => Control para la actualizacion de un examen
-ctrExam.putExamen = async (req, res) => {
+export const putExamen = async (req, res) => {
 	const { id } = req.params;
 	const { fecha, materia, nota } = req.body;
 	try {
@@ -65,7 +63,7 @@ ctrExam.putExamen = async (req, res) => {
 };
 
 //! DELETE => Control para la eliminacion de un examen
-ctrExam.deleteExamen = async (req, res) => {
+export const deleteExamen = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const examen = await Examen.findById(id);
@@ -87,6 +85,3 @@ ctrExam.deleteExamen = async (req, res) => {
 		});
 	}
 };
-
-//* Exportamos el controlador
-module.exports = ctrExam;

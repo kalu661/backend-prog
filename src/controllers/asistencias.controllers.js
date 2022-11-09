@@ -1,9 +1,7 @@
-const Asistencia = require("../models/asistencias.model.js");
-
-const ctrAsist = {};
+import Asistencia from "../models/asistencias.model";
 
 //$ POST => Control para las asistencias
-ctrAsist.postAsist = async (req, res) => {
+export const postAsist = async (req, res) => {
 	//const { fecha, alumno, materia, estado } = req.body;
 	try {
 		const asist = new Asistencia(req.body);
@@ -21,7 +19,7 @@ ctrAsist.postAsist = async (req, res) => {
 };
 
 //° GET => Control para obtener todas las asistencias
-ctrAsist.getAsist = async (req, res) => {
+export const getAsist = async (req, res) => {
 	const asist = await Asistencia.find();
 	res.json({
 		asist,
@@ -29,7 +27,7 @@ ctrAsist.getAsist = async (req, res) => {
 };
 
 //° PUT => Control para la actualizacion de asistencias
-ctrAsist.putAsist = async (req, res) => {
+export const putAsist = async (req, res) => {
 	const { id } = req.params;
 	const { fecha, alumno, materia, estado } = req.body;
 	try {
@@ -61,7 +59,7 @@ ctrAsist.putAsist = async (req, res) => {
 };
 
 //! DELETE => Control para la eliminacion de asistencias
-ctrAsist.deleteAsist = async (req, res) => {
+export const deleteAsist = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const asist = await Asistencia.findById(id);
@@ -84,6 +82,3 @@ ctrAsist.deleteAsist = async (req, res) => {
 		});
 	}
 };
-
-//° Exportamos el controlador
-module.exports = ctrAsist;

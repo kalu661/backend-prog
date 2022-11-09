@@ -13,4 +13,4 @@ const validarCampos = (req, res, next) => {
 };
 
 //* Exportacion del middleware
-export default validarCampos;
+module.exports = { validarCampos };

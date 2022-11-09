@@ -1,11 +1,12 @@
-const express = require("express");
-const helmet = require("helmet");
-const dotenv = require("dotenv");
-const morgan = require("morgan");
-const cors = require("cors");
-const { dbConnection } = require("./database/connection.js");
-const { port } = require("../config/config.js");
-const { rutas } = require("./routes/rutas.routes.js");
+import express from "express";
+import helmet from "helmet";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import cors from "cors";
+import { dbConnection } from "./database/connection";
+import { Port } from "../config/config";
+import { Rutas } from "./routes/rutas.routes";
+import { urlencoded } from "express";
 
 //$ Inicializaciones que se ejecutan al inicio de la aplicación (app)
 dotenv.config();
@@ -17,12 +18,12 @@ app.use(helmet());
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
-app.urlencoded({ extended: true });
+app.use(urlencoded({ extended: true }));
 
 //° Rutas
-app.use("/api/", rutas);
+app.use("/api/", Rutas);
 
 //$ Configuramos el puerto de escucha y el mensaje
-app.listen(port, () => {
-	console.log("Servidor corriendo en https://localhost:" + port);
+app.listen(Port, () => {
+	console.log("Servidor corriendo en http://localhost:" + Port);
 });

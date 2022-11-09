@@ -1,98 +1,24 @@
-const router = require("express").Router();
-const { check } = require("express-validator");
-const {
+import { Router } from "express";
+import {
 	postAsist,
 	getAsist,
 	putAsist,
 	deleteAsist,
-} = require("../controllers/asistencias.controllers.js");
+} from "../controllers/asistencias.controllers";
 
-const mensajeValidacion = "Todos los campos son obligatorios";
-const mensajeVal = "Revise los campos y vuelva a intentarlo";
+const router = Router();
 
 //$ POST => Control para crear una asistencia
-router.post(
-	"/asistencias",
-	[
-		check("fecha", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("hora", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("idAlumno", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("idCurso", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		postAsist,
-	],
-	(req, res) => {
-		res.json({
-			ok: true,
-			msg: "Asistencia creada correctamente",
-		});
-	}
-);
+router.post("/asistencias", postAsist);
 
 //° GET => Control para obtener todas las asistencias
-router.get("/asistencia", getAsist, (req, res) => {
-	res.json({
-		ok: true,
-		msg: "Listar asistencias",
-	});
-});
+router.get("/asistencia", getAsist);
 
 //° PUT => Control para la actualizacion de una asistencia
-router.put(
-	"/asistencias/:id",
-	[
-		check("fecha", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("hora", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("idAlumno", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("idCurso", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		putAsist,
-	],
-	(req, res) => {
-		res.json({
-			ok: true,
-			msg: "Asistencia actualizada correctamente",
-		});
-	}
-);
+router.put("/asistencias/:id", putAsist);
 
 //! DELETE => Control para eliminar una asistencia
-router.delete("/asistencias/:id", deleteAsist, (req, res) => {
-	res.json({
-		ok: true,
-		msg: "Asistencia eliminada correctamente",
-	});
-});
+router.delete("/asistencias/:id", deleteAsist);
 
 //* Exportar router
 module.exports = router;

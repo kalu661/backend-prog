@@ -1,92 +1,24 @@
-const router = require("express").Router();
-const { check } = require("express-validator");
-const {
-	getMaterias,
+import { Router } from "express";
+import {
 	postMateria,
+	getMateria,
 	putMateria,
 	deleteMateria,
-} = require("../controllers/materias.controllers.js");
+} from "../controllers/materias.controllers";
 
-const mensajeValidacion = "Todos los campos son obligatorios";
-const mensajeVal = "Revise los campos y vuelva a intentarlo";
+const router = Router();
 
 //$ POST => Control para crear una materia
-router.post(
-	"/materias",
-	[
-		check("nombre", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("descripcion", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("profesor", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("id_usuario", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-	],
-	postMateria
-);
+router.post("/materias", postMateria);
 
 //° GET => Control para listar las materias
-router.get("/materias", getMaterias, (req, res) => {
-	res.json({
-		ok: true,
-		msg: "Listar examenes",
-	});
-});
+router.get("/materias", getMateria);
 
 //° PUT => Control para actualizar una materia
-router.put(
-	"/materias/:id",
-	[
-		check("nombre", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("descripcion", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("profesor", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("fechaCreacion", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		putMateria,
-	],
-	(req, res) => {
-		res.json({
-			ok: true,
-			msg: "Materia actualizada correctamente",
-		});
-	}
-);
+router.put("/materias/:id", putMateria);
 
 //!	DELETE => Control para eliminar una materia
-router.delete("/materias/:id", deleteMateria, (req, res) => {
-	res.json({
-		ok: true,
-		msg: "Materia eliminada correctamente",
-	});
-});
+router.delete("/materias/:id", deleteMateria);
 
 //* Exportar el controllador
 module.exports = router;

@@ -1,9 +1,7 @@
-const Rols = require("../models/rol.model.js");
-
-const ctrRol = {};
+import Rols from "../models/rol.model";
 
 //$ POST => Control para crear un rol
-ctrRol.postRol = async (req, res) => {
+export const postRol = async (req, res) => {
 	const { Rol } = req.body;
 	try {
 		const nuevoRol = new rol(req.body);
@@ -21,7 +19,7 @@ ctrRol.postRol = async (req, res) => {
 };
 
 //° GET => Control para crear un rol
-ctrRol.postRol = async (req, res) => {
+export const getRol = async (req, res) => {
 	const { Rol } = req.body;
 	try {
 		const nuevoRol = new Rols(Rol);
@@ -39,7 +37,7 @@ ctrRol.postRol = async (req, res) => {
 };
 
 //° PUT => Control para la actualizacion de un rol
-ctrRol.putRol = async (req, res) => {
+export const putRol = async (req, res) => {
 	const { id } = req.params;
 	const { Rol } = req.body;
 	try {
@@ -69,7 +67,7 @@ ctrRol.putRol = async (req, res) => {
 };
 
 //! DELETE => Control para eliminar un rol
-ctrRol.deleteRol = async (req, res) => {
+export const deleteRol = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const rolDB = await Rol.findById(id);
@@ -91,6 +89,3 @@ ctrRol.deleteRol = async (req, res) => {
 		});
 	}
 };
-
-//* Exportamos el controlador
-modul.exports = ctrRol;

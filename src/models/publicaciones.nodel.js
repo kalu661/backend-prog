@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 //$ Creacion del esquema de la publicacion
 const postSchema = new mongoose.Schema(
@@ -21,4 +21,6 @@ const postSchema = new mongoose.Schema(
 );
 
 //* Exportacion del modelo
-model.exports = mongoose.model("Post", postSchema);
+const Publicaciones = mongoose.model("Post", postSchema);
+
+module.exports = Publicaciones;

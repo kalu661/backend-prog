@@ -1,95 +1,21 @@
-const router = require("express").Router();
-const { check } = require("express-validator");
-const {
+import { Router } from "express";
+import {
 	getExamenes,
 	postExamen,
 	putExamen,
 	deleteExamen,
-} = require("../controllers/examen.controllers.js");
+} from "../controllers/examen.controllers";
 
-const mensajeValidacion = "Todos los campos son obligatorios";
-const mensajeVal = "Revise los campos y vuelva a intentarlo";
+const router = Router();
 
 //$ POST => Control para crear un examen
-router.post(
-	"/examenes",
-	[
-		check("fecha", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("materia", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("nota", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("estudiante", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		postExamen,
-	],
-	(req, res) => {
-		res.json({
-			ok: true,
-			msg: "Examen creado correctamente",
-		});
-	}
-);
+router.post("/examenes", postExamen);
 //° GET => Control para listar los examenes
-router.get("/examenes", getExamenes, (req, res) => {
-	res.json({
-		ok: true,
-		msg: "Listar examenes",
-	});
-});
+router.get("/examenes", getExamenes);
 //° PUT => Control para actualizar un examen
-router.put(
-	"/examenes/:id",
-	[
-		check("nombre", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("descripcion", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("profesor", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("fechaCreacion", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		putExamen,
-	],
-	(req, res) => {
-		res.json({
-			ok: true,
-			msg: "Examen actualizado correctamente",
-		});
-	}
-);
+router.put("/examenes/:id", putExamen);
 //! DELETE => Control para eliminar un examen
-router.delete("/examenes:id", deleteExamen, (req, res) => {
-	res.json({
-		ok: true,
-		msg: "Examen eliminado correctamente",
-	});
-});
+router.delete("/examenes:id", deleteExamen);
 
 //* Exportar el router
 module.exports = router;

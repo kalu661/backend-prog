@@ -1,88 +1,27 @@
-const router = require("express").Router();
-const { check } = require("express-validator");
-const {
-	postPublicaciones,
-	getPublicaciones,
-	putPublicaciones,
-	deletePublicaciones,
-} = Simport("../controllers/publicaciones.controllers.js");
+import { Router } from "express";
+import {
+	postPublic,
+	getPublic,
+	putPublic,
+	deletePublic,
+} from "../controllers/publicaciones.controllers";
+
+const router = Router();
 
 const mensajeValidacion = "Todos los campos son obligatorios";
 const mensajeVal = "Revise los campos y vuelva a intentarlo";
 
 //$ POST => Control para crear una publicacion
-router.post(
-	"/publicaciones",
-	[
-		check("titulo", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("descripcion", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("fecha", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("imagen", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("id_usuario", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-	],
-	postPublicaciones
-);
+router.post("/publicaciones", postPublic);
 
 //° GET => Control para listar las publicaciones
-router.get("/publicaciones", getPublicaciones);
+router.get("/publicaciones", getPublic);
 
 //° PUT => Control para actualizar una publicacion
-router.put("/publicaciones:id", [
-	check("titulo", mensajeValidacion)
-		.not()
-		.isEmpty()
-		.isString()
-		.withMessage(mensajeVal),
-	check("descripcion", mensajeValidacion)
-		.not()
-		.isEmpty()
-		.isString()
-		.withMessage(mensajeVal),
-	check("fecha", mensajeValidacion)
-		.not()
-		.isEmpty()
-		.isString()
-		.withMessage(mensajeVal),
-	check("imagen", mensajeValidacion)
-		.not()
-		.isEmpty()
-		.isString()
-		.withMessage(mensajeVal),
-	check("id_usuario", mensajeValidacion)
-		.not()
-		.isEmpty()
-		.isString()
-		.withMessage(mensajeVal),
-	putPublicaciones,
-]);
+router.put("/publicaciones:id", putPublic);
 
 //! DELETE => Control para eliminar una publicacion
-router.delete("/publicaciones:id", deletePublicaciones, (req, res) => {
-	res.json({
-		ok: true,
-		msg: "Publicacion eliminada correctamente",
-	});
-});
+router.delete("/publicaciones:id", deletePublic);
 
 //* Exportar router
 module.exports = router;

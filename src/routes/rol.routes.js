@@ -1,78 +1,24 @@
-const router = require("express").Router();
-const { check } = require("express-validator");
-const {
+import { Router } from "express";
+import {
 	getRol,
 	postRol,
 	putRol,
 	deleteRol,
-} = require("../controllers/rol.controllers.js");
+} from "../controllers/rol.controllers";
 
-const mensajeValidacion = "Todos los campos son obligatorios";
-const mensajeVal = "Revise los campos y vuelva a intentarlo";
+const router = Router();
 
 //$ POST => Control para crear un rol
-router.post(
-	"/rol",
-	[
-		check("nombre", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("descripcion", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		postRol,
-	],
-	(req, res) => {
-		res.json({
-			ok: true,
-			msg: "Rol creado correctamente",
-		});
-	}
-);
+router.post("/rol", postRol);
 
 //° GET => Control para listar los roles
-router.get("/rol", getRol, (req, res) => {
-	res.json({
-		ok: true,
-		msg: "Listar roles",
-	});
-});
+router.get("/rol", getRol);
 
 //° PUT => Control para actualizar un rol
-router.put(
-	"/rol:id",
-	[
-		check("nombre", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		check("descripcion", mensajeValidacion)
-			.not()
-			.isEmpty()
-			.isString()
-			.withMessage(mensajeVal),
-		putRol,
-	],
-	(req, res) => {
-		res.json({
-			ok: true,
-			msg: "Rol actualizado correctamente",
-		});
-	}
-);
+router.put("/rol:id", putRol);
 
 //! DELETE => Control para eliminar un rol
-router.delete("/rol:id", deleteRol, (req, res) => {
-	res.json({
-		ok: true,
-		msg: "Rol eliminado correctamente",
-	});
-});
+router.delete("/rol:id", deleteRol);
 
 //* Exportar router
 module.exports = router;

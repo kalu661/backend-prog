@@ -27,4 +27,4 @@ const generarJWT = (uid = "") => {
 };
 
 //* Exportacion del token
-export { generarJWT };
+exports.generarJWT;

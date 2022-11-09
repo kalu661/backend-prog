@@ -1,12 +1,10 @@
-const Materia = require("../models/materias.models.js");
-
-const ctrMateria = {};
+import Materia from "../models/materias.models";
 
 //$ POST => Control para crear una materia
-ctrMateria.postMateria = async (req, res) => {
+export const postMateria = async (req, res) => {
 	const { Materia } = req.body;
 	try {
-		const nuevaMateria = new materia(req.body);
+		const nuevaMateria = new Materia(req.body);
 		await nuevaMateria.save();
 		res.json({
 			nuevaMateria,
@@ -20,26 +18,16 @@ ctrMateria.postMateria = async (req, res) => {
 	}
 };
 
-//° GET => Control para crear una materia
-ctrMateria.postMateria = async (req, res) => {
-	const { Materia } = req.body;
-	try {
-		const nuevaMateria = new Materia(Materia);
-		await nuevaMateria.save();
-		res.json({
-			nuevaMateria,
-		});
-	} catch (error) {
-		console.log(error);
-		res.status(400).json({
-			ok: false,
-			msg: "Error al crear la materia",
-		});
-	}
+//° GET => Control para Llamar a las materias
+export const getMateria = async (req, res) => {
+	const materias = await Materia.find();
+	res.json({
+		materias,
+	});
 };
 
 //° PUT => Control para la actualizacion de una materia
-ctrMateria.putMateria = async (req, res) => {
+export const putMateria = async (req, res) => {
 	const { id } = req.params;
 	const { Materia } = req.body;
 	try {
@@ -73,7 +61,7 @@ ctrMateria.putMateria = async (req, res) => {
 };
 
 //! DELETE => Control para eliminar una materia
-ctrMateria.deleteMateria = async (req, res) => {
+export const deleteMateria = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const materiaDB = await Materia.findById(id);
@@ -96,6 +84,3 @@ ctrMateria.deleteMateria = async (req, res) => {
 		});
 	}
 };
-
-//* Exportando el controlador
-module.exports = ctrMateria;

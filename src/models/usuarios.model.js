@@ -1,7 +1,7 @@
-const { model, Schema } = require("mongoose");
+import mongoose from "mongoose";
 
 //$ Creacion del esquema del usuario
-const UsuarioSchema = new Schema(
+const UsuarioSchema = new mongoose.Schema(
 	{
 		username: {
 			type: String,
@@ -18,6 +18,7 @@ const UsuarioSchema = new Schema(
 		},
 		roles: [
 			{
+				type: mongoose.Schema.Types.ObjectId,
 				ref: "Rol", // Referencia al modelo Rol
 			},
 		],
@@ -39,5 +40,8 @@ UsuarioSchema.methods.toJSON = function () {
 	return usuario;
 };
 
+//$ Creamos la constante para la exportacion del modelo
+const Usuario = mongoose.model("Usuario", UsuarioSchema);
+
 //* Exportacion del modelo
-module.exports = model("Usuario", UsuarioSchema);
+module.exports = Usuario;

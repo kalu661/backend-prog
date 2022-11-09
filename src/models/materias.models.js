@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 //$ Creacion del esquema de la materia
 const materiaSchema = new mongoose.Schema({

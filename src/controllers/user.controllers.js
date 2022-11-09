@@ -1,11 +1,9 @@
-const User = require("../models/usuarios.model.js");
-const bcrypt = require("bcryptjs");
-const { generarJWT } = require("../helpers/generar.jwt.js");
-
-const ctrUser = {};
+import { User } from "../models/usuarios.model";
+import bcrypt from "bcryptjs";
+import { generarJWT } from "../helpers/generar.jwt";
 
 //$ POST => Control para el login de usuario
-ctrUser.login = async (req, res) => {
+export const postLogin = async (req, res) => {
 	const { email, password } = req.body;
 	try {
 		//$ Verificar email
@@ -48,7 +46,7 @@ ctrUser.login = async (req, res) => {
 };
 
 //$ POST => Control para el registro de usuarios
-ctrUser.postRegister = async (req, res) => {
+export const postRegister = async (req, res) => {
 	const { email, password } = req.body;
 	try {
 		//$ Verificar email
@@ -81,54 +79,14 @@ ctrUser.postRegister = async (req, res) => {
 	}
 };
 
-//$ POST => Control para la creacion del usuario
-ctrUser.postUser = async (req, res) => {
-	const {
-		username,
-		password,
-		confirmpassword,
-		email,
-		roles = ["common_user"],
-	} = req.body;
-
-	if (password !== confirmpassword) {
-		return res.status(400).json({
-			ok: false,
-			msg: "Las contraseñas no coinciden",
-		});
-	}
-
-	const passswordHash = bcrypt.hashSync(password, 10);
-
-	const nuevoUsuario = new User({
-		username,
-		password: passswordHash,
-		email,
-		roles,
-	});
-
-	try {
-		const usuarioCreado = await nuevoUsuario.save();
-
-		return res.json({
-			usuarioCreado,
-		});
-	} catch (error) {
-		console.log(error);
-		return res.status(400).json({
-			msg: "Error al crear el usuario",
-		});
-	}
-};
-
 //° GET => Control para la obtencion de usuarios
-ctrUser.getUsers = async (req, res) => {
+export const getUser = async (req, res) => {
 	const users = await User.find();
 	res.json(users);
 };
 
 //° PUT => Control para la actualizacion de usuarios
-ctrUser.putUser = async (req, res) => {
+export const putUser = async (req, res) => {
 	const { id } = req.params;
 	const { _id, password, google, email, ...resto } = req.body;
 	if (password) {
@@ -140,11 +98,8 @@ ctrUser.putUser = async (req, res) => {
 };
 
 //! DELETE => Control para la eliminacion de usuarios
-ctrUser.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
 	const { id } = req.params;
 	const user = await User.findByIdAndDelete(id);
 	res.json(user);
 };
-
-//* Exportacion del controlador
-modul.export = ctrUser;
